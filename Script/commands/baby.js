@@ -6,7 +6,7 @@ const baseApiUrl = async () => {
 };
 
 module.exports.config = {
- name: "baby",
+ name: "mim",
  version: "6.9.9",
  credits: "dipto",
  cooldowns: 0,
@@ -21,12 +21,12 @@ module.exports.config = {
 
 module.exports.run = async function ({ api, event, args, Users }) {
  try {
- const link = `${await baseApiUrl()}/baby`;
+ const link = `${await baseApiUrl()}/mim`;
  const dipto = args.join(" ").toLowerCase();
  const uid = event.senderID;
 
  if (!args[0]) {
- const ran = ["Bolo baby", "hum", "type help baby", "type !baby hi"];
+ const ran = ["Bolo mim", "hum", "type help mim", "type !mim hi"];
  const r = ran[Math.floor(Math.random() * ran.length)];
  return api.sendMessage(r, event.threadID, event.messageID);
  }
@@ -55,7 +55,7 @@ module.exports.run = async function ({ api, event, args, Users }) {
  }));
  teachers.sort((a, b) => b.value - a.value);
  const output = teachers.map((teacher, index) => `${index + 1}/ ${teacher.name}: ${teacher.value}`).join('\n');
- return api.sendMessage(`Total Teach = ${res.data.length}\n\n👑 | List of Teachers of baby\n${output}`, event.threadID, event.messageID);
+ return api.sendMessage(`Total Teach = ${res.data.length}\n\n👑 | List of Teachers of mim\n${output}`, event.threadID, event.messageID);
  } else {
  const respo = await axios.get(`${link}?list=all`);
  return api.sendMessage(`Total Teach = ${respo.data.length}`, event.threadID, event.messageID);
@@ -156,7 +156,7 @@ try{
 module.exports.handleEvent = async function ({ api, event }) {
 try{
  const body = event.body ? event.body.toLowerCase() : ""
- if(body.startsWith("baby") || body.startsWith("bby") || body.startsWith("/bot")){
+ if(body.startsWith("mim") || body.startsWith("Mim") || body.startsWith("/bot")){
  const arr = body.replace(/^\S+\s*/, "")
  if(!arr) {
  await api.sendMessage("humm xan blo ami asi", event.threadID, (error, info) => {
