@@ -159,7 +159,7 @@ try{
  if(body.startsWith("bot") || body.startsWith("bot") || body.startsWith("/bot")){
  const arr = body.replace(/^\S+\s*/, "")
  if(!arr) {
- await api.sendMessage("╭•┄┅═══❁🌺❁═══┅┄•╮    Blo Tomar Jonno Ki Korte Par     ╰•┄┅═══❁🌺❁═══┅┄•╯", event.threadID, (error, info) => {
+ await api.sendMessage(" Blo Tomar Jonno Ki Korte Pari", event.threadID, (error, info) => {
  global.client.handleReply.push({
  name: this.config.name,
  type: "reply",
