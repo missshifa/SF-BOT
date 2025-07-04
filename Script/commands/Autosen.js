@@ -14,8 +14,7 @@ module.exports.config = {
 };
 
 const messages = [
- { time: '12:51 AM', message: '╭•┄┅══❁🌺❁══┅┄•╮Notification From Raja\n╰•┄┅══❁🌺❁══┅┄•╯' },
- { time: '1:00 AM', message: '╭•┄┅══❁🌺❁══┅┄•╮ Notification From Raja\n╰•┄┅══❁🌺❁══┅┄•╯' },
+ { time: '12:59 AM', message: '╭•┄┅══❁🌺❁══┅┄•╮ Notification From Raja\n╰•┄┅══❁🌺❁══┅┄•╯' },
 ];
 
 module.exports.onLoad = ({ api }) => {
