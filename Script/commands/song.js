@@ -43,7 +43,7 @@ if (urlYtb) {
       return api.sendMessage("❌ An error occurred:"+err.message,event.threadID,event.messageID);
     }
     if (result.length == 0)
-      return api.sendMessage("⭕ No search results match the keyword:"+ keyWord,event.threadID,event.messageID);
+      return api.sendMessage("আপনি যে গানটা শুনতে চান তার এক লাইন লিখুন যেমন:/song manlam Tumi Valobasoni"+ keyWord,event.threadID,event.messageID);
     let msg = "";
     let i = 1;
     const thumbnails = [];
