@@ -6,7 +6,7 @@ const baseApiUrl = async () => {
 };
 
 module.exports.config = {
- name: "mim",
+ name: "bot",
  version: "6.9.9",
  credits: "dipto",
  cooldowns: 0,
@@ -21,12 +21,12 @@ module.exports.config = {
 
 module.exports.run = async function ({ api, event, args, Users }) {
  try {
- const link = `${await baseApiUrl()}/mim`;
+ const link = `${await baseApiUrl()}/bot`;
  const dipto = args.join(" ").toLowerCase();
  const uid = event.senderID;
 
  if (!args[0]) {
- const ran = ["Bolo mim", "hum", "type help mim", "type !mim hi"];
+ const ran = ["Bolo bot", "hum", "type help bot", "type !bot hi"];
  const r = ran[Math.floor(Math.random() * ran.length)];
  return api.sendMessage(r, event.threadID, event.messageID);
  }
@@ -156,10 +156,10 @@ try{
 module.exports.handleEvent = async function ({ api, event }) {
 try{
  const body = event.body ? event.body.toLowerCase() : ""
- if(body.startsWith("mim") || body.startsWith("Mim") || body.startsWith("/bot")){
+ if(body.startsWith("bot") || body.startsWith("bot") || body.startsWith("/bot")){
  const arr = body.replace(/^\S+\s*/, "")
  if(!arr) {
- await api.sendMessage("╭•┄┅═══❁🌺❁═══┅┄•╮আমার নাম মিম আমাকে ব্যবহার করতে চাইলে নিজেকে কিছু জিজ্ঞাসা করুন উদাহরণ যেমন:mim Kemon aso╰•┄┅═══❁🌺❁═══┅┄•╯", event.threadID, (error, info) => {
+ await api.sendMessage("╭•┄┅═══❁🌺❁═══┅┄•╮    Blo Tomar Jonno Ki Korte Par     ╰•┄┅═══❁🌺❁═══┅┄•╯", event.threadID, (error, info) => {
  global.client.handleReply.push({
  name: this.config.name,
  type: "reply",
