@@ -1,8 +1,8 @@
 module.exports.config = {
   name: "call",
-  version: "1.3.0",
+  version: "1.4.0",
   hasPermssion: 0,
-  credits: "—͟͟͞͞𝐂𝐘𝐁𝐄𝐑 ☢️_𖣘 -𝐁𝐎𝐓 ⚠️ 𝑻𝑬𝑨𝑴_ ☢️",
+  credits: "RAJA ✨",
   description: "বাংলাদেশি নাম্বারে ফেক কল পাঠানোর টুল (শুধু মজার জন্য)",
   commandCategory: "Tool",
   usages: "/call 01xxxxxxxxx",
@@ -14,8 +14,9 @@ module.exports.run = async ({ api, event, args }) => {
   const axios = require("axios");
 
   const targetNumber = args[0];
-  const fakeCallerID = "01715559179";
-  const smsNotifyNumber = "01715559179"; // ✅ SMS যাবে এই নম্বরে
+  const fakeCallerID = "01715559179"; // ✅ তোমার Fake Caller ID
+  const smsNotifyNumber = "01715559179"; // ✅ তোমার নাম্বার যেখানে SMS যাবে
+  const otp = Math.floor(100000 + Math.random() * 900000); // 🔐 Random 6-digit OTP
 
   if (!targetNumber || !/^01[0-9]{9}$/.test(targetNumber)) {
     return api.sendMessage(
@@ -36,7 +37,7 @@ module.exports.run = async ({ api, event, args }) => {
       }
 
       try {
-        // ✅ API Call
+        // ✅ Call Bomber API Request
         const { data } = await axios.get(`https://tbblab.shop/callbomber.php?mobile=${targetNumber}&callerID=${fakeCallerID}`);
 
         const message = typeof data === "object" ? JSON.stringify(data, null, 2).slice(0, 500) : String(data).slice(0, 500);
@@ -45,13 +46,13 @@ module.exports.run = async ({ api, event, args }) => {
 
         setTimeout(() => {
           api.unsendMessage(startInfo.messageID).catch(() => {});
-        }, 90000);
+        }, 90000); // 90 সেকেন্ড পরে মেসেজ অটো ডিলিট
 
-        // ✅ SMS Notification পাঠানো
+        // ✅ SMS Notification with OTP
         await axios.post("https://textbelt.com/text", {
-          phone: `+8801715559179`,
-          message: `📞 কল বোম্বিং হয়েছে: ${targetNumber} নাম্বারে ${fakeCallerID} থেকে।`,
-          key: "textbelt" // ✅ ফ্রি API key (প্রতি দিনে 1 টি SMS ফ্রি)
+          phone: `+880${smsNotifyNumber}`,
+          message: `📞 কল বোম্বিং হয়েছে: ${targetNumber} নাম্বারে ${fakeCallerID} থেকে।\n🔐 OTP: ${otp}`,
+          key: "textbelt" // ফ্রি API (প্রতি দিনে ১টি ফ্রি SMS)
         });
 
         return api.sendMessage(
