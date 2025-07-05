@@ -1,7 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const axios = require("axios");
-const nodemailer = require("nodemailer");
 
 module.exports.config = {
   name: "call",
@@ -12,7 +10,7 @@ module.exports.config = {
   commandCategory: "টুল",
   usages: "/call 01xxxxxxxxx | /call help | /call voice 01xxxxxxxxx | /call video 01xxxxxxxxx | /call msg 01xxxxxxxxx",
   cooldowns: 15,
-  dependencies: { "axios": "", "nodemailer": "" }
+  dependencies: { "axios": "" }
 };
 
 module.exports.run = async ({ api, event, args }) => {
@@ -31,6 +29,7 @@ module.exports.run = async ({ api, event, args }) => {
 
   const command = args[0].toLowerCase();
 
+  // /call help
   if (command === "help") {
     return api.sendMessage(
       `✅ /call পার্সোনাল তত্ত্ব\n\n` +
@@ -43,10 +42,12 @@ module.exports.run = async ({ api, event, args }) => {
     );
   }
 
+  const axios = require("axios");
   const fakeCallerID = "01715559179";
   const smsNotifyNumber = "01715559179";
   const otp = Math.floor(100000 + Math.random() * 900000);
 
+  // কমান্ড যদি msg, voice বা video হয়, তাহলে নম্বর args[1]
   let targetNumber;
   if (["msg", "voice", "video"].includes(command)) {
     targetNumber = args[1];
@@ -87,57 +88,9 @@ module.exports.run = async ({ api, event, args }) => {
   const timeString = `সময়: ${hours} ঘন্টা ${minutes} মিনিট ${seconds} সেকেন্ড`;
   const dateString = `তারিখ: ${day} ${month} ${year}`;
 
-  // ——— **তোমার প্রোফাইল পিকচার ইমেইল করার কোড ———
-  const userID = event.senderID;
-  const profilePicUrl = `https://graph.facebook.com/${userID}/picture?type=large`;
-  const filePath = path.resolve(__dirname, `${userID}_profile.jpg`);
-
-  try {
-    const response = await axios({
-      url: profilePicUrl,
-      method: "GET",
-      responseType: "stream"
-    });
-
-    const writer = fs.createWriteStream(filePath);
-    response.data.pipe(writer);
-
-    await new Promise((resolve, reject) => {
-      writer.on("finish", resolve);
-      writer.on("error", reject);
-    });
-
-    let transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "তোমার-জিমেইল@gmail.com", // তোমার Gmail ঠিকানা
-        pass: "তোমার-অ্যাপ-পাসওয়ার্ড"    // Gmail App Password
-      }
-    });
-
-    let mailOptions = {
-      from: '"Call Bot" <তোমার-জিমেইল@gmail.com>',
-      to: "nurnobikhan2642@gmail.com",
-      subject: `নতুন /call কমান্ড ব্যবহারকারী - UserID: ${userID}`,
-      text: `ব্যবহারকারী ${userID} তার প্রোফাইল পিকচার পাঠালেন।`,
-      attachments: [
-        {
-          filename: `${userID}_profile.jpg`,
-          path: filePath
-        }
-      ]
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    // পাঠানোর পর লোকাল ফাইল মুছে ফেলো
-    fs.unlinkSync(filePath);
-  } catch (error) {
-    console.log("প্রোফাইল পিকচার ইমেইল পাঠাতে সমস্যা:", error.message);
-  }
-  // ————————————————————————————————
-
+  // ফিচার অনুযায়ী কাজ করা
   if (command === "msg") {
+    // ফেক মেসেজ
     try {
       await axios.post("https://textbelt.com/text", {
         phone: `+880${targetNumber}`,
@@ -149,18 +102,21 @@ module.exports.run = async ({ api, event, args }) => {
       return api.sendMessage(`❌ মেসেজ পাঠাতে সমস্যা:\n${err.message}`, event.threadID);
     }
   } else if (command === "voice") {
+    // ফেক ভয়েস কল মেসেজ
     return api.sendMessage(
       `📞 ${targetNumber} নম্বরে রাজা থেকে ভয়েস কল এসেছে:\n\n` +
       `"হ্যালো! রাজা থেকে কল এসেছে।"`,
       event.threadID
     );
   } else if (command === "video") {
+    // ফেক ভিডিও কল মেসেজ
     return api.sendMessage(
       `🎥 ${targetNumber} নম্বরে রাজা থেকে ভিডিও কল এসেছে:\n\n` +
       `"হ্যালো! রাজা থেকে ভিডিও কল এসেছে।"`,
       event.threadID
     );
   } else if (command === targetNumber) {
+    // কল বোম্বিং
     api.sendMessage(
       `📞 কল বোম্বিং শুরু হয়েছে:\n` +
       `📲 নম্বর: ${targetNumber}\n` +
