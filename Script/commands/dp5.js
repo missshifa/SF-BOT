@@ -1,5 +1,5 @@
 module.exports.config = {
-  name: "dp8",
+  name: "dp5",
   version: "1.0.0",
   hasPermission: 0,
   credits: "Shaon",
