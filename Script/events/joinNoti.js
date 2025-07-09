@@ -65,37 +65,9 @@ ${global.config.PREFIX}Help\n${global.config.PREFIX} Manu
             }
             memLength.sort((a, b) => a - b);
             
-            (typeof threadData.customJoin == "undefined") ? msg = "╭•┄┅═══❁🌺❁═══┅┄•╮\n   আসসালামু আলাইকুম-!!🖤\n╰•┄┅═══❁🌺❁═══┅┄•╯ \n\n    ${day} ${month}, ${year} ${period} ${hour}:${minute < 10 ? '0' + minute : minute} ${hour >= 12 ? 'PM' : 'AM'} ✨🆆🅴🅻🅻 🅲🅾🅼🅴✨\n\n                ❥𝐍𝐄𝐖~\n\n        ~🇲‌🇪‌🇲‌🇧‌🇪‌🇷‌~\n\n        [   {name} ]\n\n༆-✿ আপনাকে আমাদের࿐\n\n{threadName}\n\n🌺✨!!—এর পক্ষ-থেকে-!!✨🌺\n\n❤️🫰_ভালোবাস_অভিরাম_🫰❤️\n\n༆-✿আপনি_এই_গ্রুপের {soThanhVien} নং মেম্বার࿐\n\n ╭•┄┅═══❁🌺❁═══┅┄•╮\n  🌸  RAJA ViP 5X 🌸\n╰•┄┅═══❁🌺❁═══┅┄•╯" : msg = threadData.customJoin;
-            msg = msg 
-            function getEnglishTime() {
-  const now = moment().tz("Asia/Dhaka");
-  let hour = now.hour();
-  let minute = now.minute();
-  let period = "";
-
-  if (hour >= 4 && hour < 12) period = "Morning";
-  else if (hour >= 12 && hour < 16) period = "Noon";
-  else if (hour >= 16 && hour < 18) period = "Afternoon";
-  else if (hour >= 18 && hour < 20) period = "Evening";
-  else period = "Night";
-
-  hour = hour % 12 || 12;
-  return `${period} ${hour}:${minute < 10 ? '0' + minute : minute} ${hour >= 12 ? 'PM' : 'AM'}`;
-}
-
-function getEnglishDate() {
-  const now = moment().tz("Asia/Dhaka");
-  const englishMonths = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
-
-  const day = now.date();
-  const month = englishMonths[now.month()];
-  const year = now.year();
-
-  return `${day} ${month}, ${year}`
-
+            (typeof threadData.customJoin == "undefined") ? msg = "╭•┄┅═══❁🌺❁═══┅┄•╮\n   আসসালামু আলাইকুম-!!🖤\n╰•┄┅═══❁🌺❁═══┅┄•╯ \n\n    ✨🆆🅴🅻🅻 🅲🅾🅼🅴✨\n\n                ❥𝐍𝐄𝐖~\n\n        ~🇲‌🇪‌🇲‌🇧‌🇪‌🇷‌~\n\n        [   {name} ]\n\n༆-✿ আপনাকে আমাদের࿐\n\n{threadName}\n\n🌺✨!!—এর পক্ষ-থেকে-!!✨🌺\n\n❤️🫰_ভালোবাস_অভিরাম_🫰❤️\n\n༆-✿আপনি_এই_গ্রুপের {soThanhVien} নং মেম্বার࿐\n\n ╭•┄┅═══❁🌺❁═══┅┄•╮\n  🌸  RAJA ViP 5X 🌸\n╰•┄┅═══❁🌺❁═══┅┄•╯" : msg = threadData.customJoin;
+            msg = msg
+            
             .replace(/\{name}/g, nameArray.join(', '))
             .replace(/\{type}/g, (memLength.length > 1) ?  'Friends' : 'Friend')
             .replace(/\{soThanhVien}/g, memLength.join(', '))
@@ -115,4 +87,4 @@ function getEnglishDate() {
             return api.sendMessage(formPush, threadID);
         } catch (e) { return console.log(e) };
     }
-                    }
+                }
