@@ -42,7 +42,7 @@ const onChat = async ({ api, event }) => {
       dipto.startsWith("https://fb.watch")
     ) {
       api.setMessageReaction("⌛", event.messageID, {}, true);
-      const w = await api.sendMessage("Wait Bby <😘", event.threadID);
+      const w = await api.sendMessage("╭──────•◈•───────╮                        𝘙𝘈𝘑𝘈 𝘝𝘪𝘗 5𝘟                                𝘗𝘓𝘌𝘈𝘚𝘌 𝘞𝘈𝘐𝘛 𝘋𝘖𝘞𝘕𝘓𝘖𝘈𝘋 𝘠𝘖𝘜𝘙 𝘝𝘐𝘋𝘌𝘖 ╰──────•◈•───────╯", event.threadID);
       const response = await axios.get(`${await baseApiUrl()}/alldl?url=${encodeURIComponent(dipto)}`);
       const d = response.data;
       if (d.result.includes(".jpg")) {
