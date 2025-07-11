@@ -1,40 +1,71 @@
-<p align="center"><a href="https://m.me/RAJA.ViP.5X.09638357510" target="_blank" rel="noopener noreferrer">
-  <img src="https://i.imgur.com/mhZbqG3.jpeg" width="50" style="margin-right: 10px;"></a>
-</p>
-<h5 align="center">
-🔹RS RAJA CHOWDHURY
+// 🛡️🔐 Protected Information - DO NOT CHANGE!
+const OWNER = {
+  facebook: "https://www.facebook.com/share/1FbiVmnXet/",
+  messenger: "https://m.me/RAJA.ViP.5X.09638357510",
+  whatsapp: "https://wa.me/+8801715559179",
+  ownerName: "RAJA CHOWDHURY"
+};
 
+// 🔍 Verify Owner Information
+function verifyOwnerInfo() {
+  const currentInfo = {
+    facebook: "https://www.facebook.com/share/1FbiVmnXet/",
+    messenger: "https://m.me/RAJA.ViP.5X.09638357510",
+    whatsapp: "https://wa.me/+8801715559179",
+    ownerName: "RAJA CHOWDHURY"
+  };
 
-- [📝 **Note**](#-note)
-- [🚧 **Requirement**](#-requirement)
-- [📝 **Tutorial**](#-tutorial)
-- [💡 **How it works?**](#-how-it-works)
-- [🔔 **How to get notification when have new update?**](#-how-to-get-notification-when-have-new-update)
-- [🆙 **How to Update**](#-how-to-update)
-- [🛠️ **How to create new commands**](#️-how-to-create-new-commands)
-- [💭 **Support**](#-support)
-- [📚 **Support Languages in source code**](#-support-languages-in-source-code)
-- [📌 **Common Problems**](#-common-problems)
-- [❌ **DO NOT USE THE ORIGINAL UNDERGRADUATE VERSION**](#-do-not-use-the-original-undergraduate-version)
-- [📸 **Screenshots**](#-screenshots)
-- [✨ **Copyright (C)**](#-copyright-c)
-- [📜 **License**](#-license)
-- 
-BOT-OWNER-CONTEG"
+  for (let key in OWNER) {
+    if (OWNER[key] !== currentInfo[key]) {
+      console.error(`❌ SECURITY ALERT: ${key} has been modified! Bot shutting down...`);
+      process.exit(1); // ⛔ Stop bot if tampered
+    }
+  }
+}
 
- FACEBOKhttps://www.facebook.com/share/1FbiVmnXet/"
+// 🔐 Run security check
+verifyOwnerInfo();
 
-FACEBOKhttps://www.facebook.com/share/1FbiVmnXet/"
+// ✅ Continue if security passes
+console.log("✅ OWNER VERIFIED: Starting RAJA-BOT...");
 
-MESSENGER:m.me/RAJA.ViP.5X.09638357510"
+// 🌐 Create Express Server
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 8080;
 
-WHATSAPP
-wa.me/+8801715559179"
+// 🖥️ Show Profile & Info on Homepage
+app.get("/", (req, res) => {
+  res.send(`
+    <html>
+    <head><title>RAJA-BOT</title></head>
+    <body style="font-family: Arial, sans-serif; text-align: center; background: #f0f0f0;">
+      <a href="${OWNER.messenger}" target="_blank">
+        <img src="https://i.imgur.com/mhZbqG3.jpeg" width="100" style="border-radius: 50%; margin-top: 20px;" />
+      </a>
+      <h2>🔹 ${OWNER.ownerName}</h2>
 
-<img align="center" src="https://i.imgur.com/EkmNZ6I.jpeg"/>
+      <p>
+        <a href="${OWNER.facebook}" target="_blank">🌐 Facebook</a><br>
+        <a href="${OWNER.messenger}" target="_blank">💬 Messenger</a><br>
+        <a href="${OWNER.whatsapp}" target="_blank">📱 WhatsApp</a>
+      </p>
 
+      <img src="https://i.imgur.com/EkmNZ6I.jpeg" width="250" style="margin: 20px auto;" />
 
-🔹 RAJA CHOWDHURY 
+      <h3>🤖 RAJA-BOT is running securely!</h3>
+      <p>❤️💛🤍💚💙💜❣️💟💘💌</p>
+
+      <small>Editing by RAJA CHOWDHURY | RS RAJA BOT-PACK-007</small>
+    </body>
+    </html>
+  `);
+});
+
+// 🚀 Start server
+app.listen(port, () => {
+  console.log(`🚀 RAJA-BOT is running at: http://localhost:${port}`);
+});
 
 name: Node.js CI
 
@@ -72,20 +103,3 @@ jobs:
       env:
         PORT: 8080
       run: npm start
-
-
-# Editing BY RAJA CHOWDHURY
-
-# RAJA-BOT-PACK-SUPPER-ROBOT REAL OWNER RS RAJA CHOWDHURY
-
-# Everyone run this RAJA-BOT-007 for fun
-
-# If there is any error, I will fix it by knocking on Facebook
-
-# https://www.facebook.com/share/1FbiVmnXet/
-
-# I hope you enjoy
-
-# THANK YOU
-
-# ❤️💛🤍💚💙💜❣️💟💘💌
