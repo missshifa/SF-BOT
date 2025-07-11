@@ -2,8 +2,8 @@ module.exports.config = {
  name: "video",
  version: "1.0.0",
  hasPermssion: 0,
- credits: "𝐂𝐘𝐁𝐄𝐑 ☢️_𖣘 -𝐁𝐎𝐓 ⚠️ 𝑻𝑬𝑨𝑴_ ☢️",
- description: "RANDOM islamic video",
+ credits: "RAJA ViP 5X",
+ description: "RANDOM items video",
  commandCategory: "Random video",
  usages: "Statusvideo",
  cooldowns: 2,
@@ -30,6 +30,12 @@ const fs = global.nodemodule["fs-extra"];
 "https://i.imgur.com/ed5oSs8.mp4",
 "https://i.imgur.com/GRV6Jbi.mp4",
 "https://i.imgur.com/UcOl1C4.mp4",
+"https://i.imgur.com/INZTwlx.mp4",
+"https://i.imgur.com/xXxHuOI.mp4",
+"https://i.imgur.com/jRqSdEB.mp4",
+"https://i.imgur.com/48Heh4G.mp4",
+"https://i.imgur.com/bLfNsmH.mp4",
+"https://i.imgur.com/u0njpg5.mp4",
  ];
  var callback = () => api.sendMessage({body:`╭──────•◈•───────╮\n  𝘙𝘈𝘑𝘈 𝘝𝘪𝘗 5𝘟 𝘝𝘪𝘋𝘌𝘖\n╰──────•◈•───────╯`,attachment: fs.createReadStream(__dirname + "/cache/1.mp4")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/1.mp4"));
  return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname+"/cache/1.mp4")).on("close",() => callback());
