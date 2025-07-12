@@ -1,7 +1,7 @@
 module.exports.config = {
   name: "sexy",
   version: "1.0.0",
-  hasPermission: 0,
+  hasPermission: 2,
   credits: "Shaon",
   description: "Send a trending TikTok video",
   commandCategory: "media",
