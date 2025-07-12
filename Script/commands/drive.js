@@ -29,7 +29,7 @@ module.exports.run = async function({ api, event, args }) {
 
  try {
  const noobx = "ArYAN";
- const apiURL = `https://aryan-xyz-google-drive.vercel.app/drive?url=${encodeURIComponent(inputUrl)}&apikey=${noobx}' await axios.get(apiURL);
+ const apiURL = `https://aryan-xyz-google-drive.vercel.app/drive?url=${encodeURIComponent(inputUrl)}&apikey=${noobx}';
 
  const data = res.data || {};
  const driveLink = data.driveLink || data.driveLIink;
