@@ -5,7 +5,7 @@ const path = require("path");
 module.exports.config = {
  name: "shoti",
  version: "1.0.2",
- hasPermission: 0,
+ hasPermission: 2,
  credits: "Shaon Ahmed",
  description: "Send a random shoti (TikTok short video)",
  commandCategory: "media",
