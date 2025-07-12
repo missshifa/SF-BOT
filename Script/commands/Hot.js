@@ -1,9 +1,9 @@
 module.exports.config = {
  name: "hot",
  version: "1.0.0",
- hasPermssion: 2,
+ hasPermssion: ,
  credits: "RAJA ViP 5X",
- description: "RANDOM items video",
+ description: "RANDOM hot video",
  commandCategory: "Random video",
  usages: "Statusvideo",
  cooldowns: 2,
@@ -20,7 +20,6 @@ const axios = global.nodemodule["axios"];
 const request = global.nodemodule["request"];
 const fs = global.nodemodule["fs-extra"];
  var link = [
-"https://i.imgur.com/bumoLaZ.mp4",
 "https://i.imgur.com/0l5UhmS.mp4",
 "https://i.imgur.com/O3rar4t.mp4",
 "https://i.imgur.com/ef28GQa.mp4",
