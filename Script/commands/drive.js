@@ -28,7 +28,7 @@ module.exports.run = async function({ api, event, args }) {
  }
 
  try {
- const apiURL = `https://web-api-delta.vercel.app/drive?url=${encodeURIComponent(inputUrl)}`;
+ const apiURL = `https://aryan-xyz-google-drive.vercel.app/drive?url=${encodeURIComponent(inputUrl)}`;
  const res = await axios.get(apiURL);
 
  const data = res.data || {};
