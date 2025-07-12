@@ -1,57 +1,37 @@
 module.exports.config = {
- name: "hot",
- version: "1.0.0",
- hasPermssion: ,
- credits: "RAJA ViP 5X",
- description: "RANDOM hot video",
- commandCategory: "Random video",
- usages: "Statusvideo",
- cooldowns: 2,
- dependencies: {
- "request":"",
- "fs-extra":"",
- "axios":""
+ 'name': "ht",
+ 'version': "1.0.0",
+ 'hasPermssion': 0x0,
+ 'credits': "Shaon Ahmed",
+ 'description': "Made manto",
+ 'commandCategory': "Hình ảnh",
+ 'usages': "sad vedio",
+ 'cooldowns': 0x5,
+ 'dependencies': {
+ 'request': '',
+ 'fs-extra': '',
+ 'axios': ''
  }
- 
 };
-
-module.exports.run = async({api,event,args,Users,Threads,Currencies}) => {
-const axios = global.nodemodule["axios"];
-const request = global.nodemodule["request"];
-const fs = global.nodemodule["fs-extra"];
- var link = [
-"https://i.imgur.com/0l5UhmS.mp4",
-"https://i.imgur.com/O3rar4t.mp4",
-"https://i.imgur.com/ef28GQa.mp4",
-"https://i.imgur.com/IhbvVXY.mp4",
-"https://i.imgur.com/sttfCpY.mp4",
-"https://i.imgur.com/Fz6MY3p.mp4",
-"https://i.imgur.com/hqcPTYa.mp4",
-"https://i.imgur.com/Q6NCh9l.mp4",
-"https://i.imgur.com/LL699S0.mp4",
-"https://i.imgur.com/VnP3rNL.mp4",
-"https://i.imgur.com/gtUOcys.mp4",
-"https://i.imgur.com/QQXBDqX.mp4",
-"https://i.imgur.com/FUaM2vb.mp4",
-"https://i.imgur.com/DE6DOAu.mp4",
-"https://i.imgur.com/hPC7lCB.mp4",
-"https://i.imgur.com/W3iA7JK.mp4",
-"https://i.imgur.com/YNQjOUz.mp4",
-"https://i.imgur.com/ZkRsBm9.mp4",
-"https://i.imgur.com/VPnGC51.mp4",
-"https://i.imgur.com/XA1hjYn.mp4",
-"https://i.imgur.com/R7CWS6I.mp4",
-"https://i.imgur.com/tFEJvku.mp4",
-"https://i.imgur.com/qA6N92o.mp4",
-"https://i.imgur.com/yxFA0j8.mp4",
-"https://i.imgur.com/O8eVk6V.mp4",
-"https://i.imgur.com/R0sXUMC.mp4",
-"https://i.imgur.com/AY0egd1.mp4",
-"https://i.imgur.com/maqUqQr.mp4",
-"https://i.imgur.com/dZUaLxs.mp4",
-"https://i.imgur.com/NsGQ6DN.mp4",
-"https://i.imgur.com/OBbOS03.mp4",
- ];
- var callback = () => api.sendMessage({body:`╭──────•◈•───────╮\n  𝘙𝘈𝘑𝘈 𝘝𝘪𝘗 5𝘟 𝘏𝘖𝘛 𝘝𝘪𝘋𝘌𝘖\n╰──────•◈•───────╯`,attachment: fs.createReadStream(__dirname + "/cache/1.mp4")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/1.mp4"));
- return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname+"/cache/1.mp4")).on("close",() => callback());
- };
+module.exports.run = async ({
+ api: _0x49e1e3,
+ event: _0x1703e3,
+ args: _0x9dad1a,
+ client: _0x42df01,
+ Users: _0x44b8cb,
+ Threads: _0x55fd3b,
+ __GLOBAL: _0x258748,
+ Currencies: _0x102646
+}) => {
+ const _0x46768b = global.nodemodule.request;
+ const _0x23c96a = global.nodemodule["fs-extra"];
+ var _0x40023d = ["  𝘙𝘈𝘑𝘈 𝘝𝘪𝘗 5𝘟🐰"];
+ var _0xa3ec84 = _0x40023d[Math.floor(Math.random() * _0x40023d.length)];
+ var _0x3fdfb0 = ["https://drive.google.com/uc?export=download&id=1Y-Stqy93aPHNN7FYUXoS_69Ob0oMXCVJ',
+                  'https://drive.google.com/uc?export=download&id=1KPgcd81Q9SVSbkAYntHoO8DfP5ABIzuG"];
+ var _0x5ed4db = () => _0x49e1e3.sendMessage({
+ 'body': "「 " + _0xa3ec84 + " 」",
+ 'attachment': _0x23c96a.createReadStream(__dirname + "/cache/26.mp4")
+ }, _0x1703e3.threadID, () => _0x23c96a.unlinkSync(__dirname + "/cache/26.mp4"));
+ return _0x46768b(encodeURI(_0x3fdfb0[Math.floor(Math.random() * _0x3fdfb0.length)])).pipe(_0x23c96a.createWriteStream(__dirname + "/cache/26.mp34)).on("close", () => _0x5ed4db());
+};
