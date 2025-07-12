@@ -58,7 +58,7 @@ module.exports.run = function({ api, event, args, getText }) {
       if (!group.some(item => item.group.toLowerCase() == commandConfig.config.commandCategory.toLowerCase())) group.push({ group: commandConfig.config.commandCategory.toLowerCase(), cmds: [commandConfig.config.name] });
       else group.find(item => item.group.toLowerCase() == commandConfig.config.commandCategory.toLowerCase()).cmds.push(commandConfig.config.name);
     }
-    group.forEach(commandGroup => msg += `╭•┄┅════❁SHAON PROJECT❁════┅┄•╮ ${commandGroup.group.toUpperCase()}\•—»✨${commandGroup.cmds.join('\n✨«—• ')}\n╰•┄┅════❁SHAON PROJECT❁════┅┄•╯\n`);
+    group.forEach(commandGroup => msg += `╭•┄┅════❁𝘙𝘈𝘑𝘈 𝘝𝘪𝘗 5𝘟❁════┅┄•╮ ${commandGroup.group.toUpperCase()}\•—»✨${commandGroup.cmds.join('\n✨«—• ')}\n╰•┄┅════❁𝘙𝘈𝘑𝘈 𝘝𝘪𝘗 5𝘟❁════┅┄•╯\n`);
     return api.sendMessage(msg + getText("helpList", commands.size, prefix), threadID, async (error, info) =>{
       if (autoUnsend) {
         await new Promise(resolve => setTimeout(resolve, delayUnsend * 1000));
