@@ -1,8 +1,8 @@
 module.exports.config = {
-  name: ",Raja01",
+  name: ",Raja7",
   version: "1.0.0",
   hasPermssion: 0,
-  credits: "RAJA ViP 5X",
+  credits: "Shaon Ahmed",
   description: "sand best islamick Video",
   commandCategory: "noprefix",
   usages: "😒",
@@ -74,7 +74,8 @@ const fs = global.nodemodule["fs-extra"];
 "https://i.imgur.com/X3FdGKj.mp4",
 "https://i.imgur.com/cxxJ9mK.mp4",
 "https://i.imgur.com/Yn4aJO2.mp4",
-"https://i.imgur.com/qKX9s2j.mp4",];
+"https://i.imgur.com/qKX9s2j.mp4"
+];
      var callback = () => api.sendMessage({body:`•—»✨[ 𝐏𝐫𝐞𝐟𝐢𝐱 𝐄𝐯𝐞𝐧𝐭 ]✨«—•\n•┄┅════❁🌺❁════┅┄•\n\n❂\n            🫶💜🪽
 \n___কষ্ট আর কষ্ট এতো কষ্ট আর আমার মনে রাখার জায়গা নেই জানিনা কখন হার্ট স্ট্রোক করে মারা যায় ♡🩷🕌\n\n#RAJA 卝 চৌধুরীヅ\n\n•┄┅════❁🌺❁════┅┄•\n•—»✨[ 𝐑𝐚𝐣𝐚 𝐏𝐫𝐨𝐣𝐞𝐜𝐭 ]✨«—•\n[🐰]  𝗣𝗿𝗲𝗳𝗶𝘅 : [ ${PREFIX} ]\n[🫰] 𝐍𝐎𝐏𝐑𝐄𝐅𝐈𝐗  : 😒\n[⌛]  𝐃𝐚𝐭𝐞  : ${Date.now() - timeStart} 𝐓𝐢𝐦𝐞\n[🍒]  ${global.config.BOTNAME}`,attachment: fs.createReadStream(__dirname + "/cache/2024.mp4")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/2024.mp4"), event.messageID);
   const timeStart = Date.now();
