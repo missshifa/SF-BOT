@@ -38,13 +38,13 @@ const link = [
 ];
 
 module.exports.config = {
- name: "/hot",
+ name: "hot",
  version: "1.0.0",
  hasPermssion: 0,
  credits: "RAJA ViP 5X",
  description: "auto reply to salam",
  commandCategory: "noprefix",
- usages: "/hot",
+ usages: "hot",
  cooldowns: 5,
  dependencies: {
  "request":"",
@@ -56,7 +56,7 @@ module.exports.config = {
 module.exports.handleEvent = async ({ api, event, Threads }) => {
  const content = event.body ? event.body : '';
  const body = content.toLowerCase();
- if (body.startsWith("/hot")) {
+ if (body.startsWith("hot")) {
  const rahad = [
  "╭•┄┅════❁🌺❁════┅┄•╮\n\n𝘙𝘈𝘑𝘈 𝘝𝘪𝘗 5𝘟 𝘏𝘖𝘛 𝘝𝘪𝘋𝘌𝘖\n\n╰•┄┅════❁🌺❁════┅┄•╯",
  "╭•┄┅════❁🌺❁════┅┄•╮\n\n 𝘙𝘈𝘑𝘈 𝘝𝘪𝘗 5𝘟 𝘏𝘖𝘛 𝘝𝘪𝘋𝘌𝘖\n\n╰•┄┅════❁🌺❁════┅┄•╯"
@@ -91,9 +91,9 @@ module.exports.languages = {
 module.exports.run = async ({ api, event, Threads, getText }) => {
  const { threadID, messageID } = event;
  let data = (await Threads.getData(threadID)).data;
- if (typeof data["/hot"] === "undefined" || data["/hot"]) data["/hot"] = false;
- else data["/hot"] = true;
+ if (typeof data["hot"] === "undefined" || data["hot"]) data["hot"] = false;
+ else data["hot"] = true;
  await Threads.setData(threadID, { data });
  global.data.threadData.set(threadID, data);
- api.sendMessage(`${(data["/hot"]) ? getText("off") : getText("on")} ${getText("successText")}`, threadID, messageID);
+ api.sendMessage(`${(data["hot"]) ? getText("off") : getText("on")} ${getText("successText")}`, threadID, messageID);
 };
