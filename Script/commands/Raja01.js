@@ -1,18 +1,12 @@
 module.exports.config = {
-  name: ",Raja7",
+  name: "Raja01",
   version: "1.0.0",
-  hasPermssion: 0,
-  credits: "Shaon Ahmed",
-  description: "sand best islamick Video",
-  commandCategory: "noprefix",
-  usages: "😒",
+  hasPermission: 0,
+  credits: "Shaon",
+  description: "Send a trending TikTok video",
+  commandCategory: "media",
+  usages: "",
   cooldowns: 5,
-  dependencies: {
-    "request":"",
-    "fs-extra":"",
-    "axios":""
-  }
-
 };
 module.exports.handleEvent = async ({ api, event, Threads }) => {
     if (event.body.indexOf("aso")==0 || (event.body.indexOf("janina")==0) || event.body.indexOf("ami")==0 ||
