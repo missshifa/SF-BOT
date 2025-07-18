@@ -1,7 +1,7 @@
 module.exports.config = {
-  name: "help2",
+  name: "helpall",
   version: "1.0.2",
-  hasPermssion: 0,
+  hasPermssion: 2,
   credits: "Shaon Ahmed",
   description: "Beginner's Guide",
   commandCategory: "SYSTEM",
