@@ -1,7 +1,7 @@
 module.exports.config = {
-  name: "hot",
+  name: "mimi",
   version: "1.0.0",
-  hasPermission: 2,
+  hasPermission: 0,
   credits: "Shaon",
   description: "Send a trending TikTok video",
   commandCategory: "media",
