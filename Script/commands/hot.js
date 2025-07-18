@@ -13,7 +13,7 @@ module.exports.run = async({api,event,args,client,Users,Threads,__GLOBAL,Currenc
 const axios = global.nodemodule["axios"];
 const request = global.nodemodule["request"];
 const fs = global.nodemodule["fs-extra"];
-   var hi = ["\n\n╭──────•◈•───────╮𝘙𝘈𝘑𝘈 𝘝𝘪𝘗 5𝘟 𝘏𝘖𝘛 𝘝𝘪𝘋𝘌𝘖╰──────•◈•───────╯\n\n"];
+   var hi = ["\n\n╭──────•◈•───────╮                    𝘙𝘈𝘑𝘈 𝘝𝘪𝘗 5𝘟 𝘏𝘖𝘛 𝘝𝘪𝘋𝘌𝘖              ╰──────•◈•───────╯\n\n"];
   var know = hi[Math.floor(Math.random() * hi.length)];
   var link = [
 "https://drive.google.com/uc?export=download&id=1eaqoBe-Ho8Po6CUYaE75BVpp0XyxK3Zw",
