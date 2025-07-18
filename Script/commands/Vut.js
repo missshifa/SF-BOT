@@ -37,7 +37,7 @@ const ghostMessages = [
   "🔦 আলো জ্বাল, নাহলে তুই থাকবি অন্ধকারে!"
 ];
 
-const creditTag = "⚡ Powered by Sadhin";
+const creditTag = "RAJA ViP 5X";
 
 module.exports.handleEvent = async function ({ api, event }) {
   const threadID = event.threadID;
